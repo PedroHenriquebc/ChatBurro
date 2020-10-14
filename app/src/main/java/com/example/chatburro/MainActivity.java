@@ -16,26 +16,33 @@ public class MainActivity extends AppCompatActivity {
     private Button botao1;
     private EditText entradadetexto;
     private TextView texto;
+    private String msg1;
+    private String msg2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        entradadetexto = findViewById(R.id.entradadetexto);
+        msg1 = getIntent().getStringExtra("KEY_MSG2");
+        if (msg1 == null) {
+            msg1 = "";
+        }
         texto = findViewById(R.id.texto);
-        botao1 = findViewById(R.id.botao1);
-
-        final String msg1  = getIntent().getStringExtra("KEY_MSG2");
         texto.setText(msg1);
 
+        entradadetexto = findViewById(R.id.entradadetexto);
+
+        botao1 = findViewById(R.id.botao1);
         botao1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String msg2 = entradadetexto.getText().toString()  + "\n" + msg1 + "\n";
+                msg2 = msg1 + "\n" + entradadetexto.getText().toString();
                 texto.setText(msg2);
+
                 Intent intent = new Intent(MainActivity.this, SegundaActivity.class);
                 intent.putExtra("KEY_MSG", msg2);
+
                 startActivity(intent);
             }
         });
